@@ -1,8 +1,15 @@
 <template>
   <div class="bg-black">
-    <h1 class="bg-black font-bold text-2xl text-(--ui-primary) p-2">
+    <h1 class="bg-black font-bold text-4xl text-(--ui-primary) p-2 text-center">
       Creed Esporte 
     </h1>
+    <div >
+      <UNavigationMenu 
+        collapsed
+        orientation="horizontal"
+        :items="menus"
+        class="text-white w-full justify-center"/>
+    </div>
     <hr style="color: gray;">
     <div class="h-20 p-5 flex items-center justify-center bg-black">
       <label class="font-bold text-(--ui-primary)">A sua crença do esporte está aqui</label>
@@ -37,9 +44,33 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { NavigationMenuItem } from '@nuxt/ui'
+
 useHead({
   title: 'Creed Esporte',
 })
+
+const menus = ref<NavigationMenuItem[]>([
+  {
+    label: 'Home',
+    icon: 'i-lucide-house',
+    to: '/',
+    children: [],
+    active: true,
+  },
+  {
+    label: 'Catálogo',
+    icon: 'i-lucide-list',
+    to: '/produtos',
+    children: []
+  },
+  {
+    label: 'Contato',
+    icon: 'i-lucide-phone',
+    to: '/components',
+    children: []
+  }
+])
 
 const items = [
   {
