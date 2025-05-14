@@ -36,8 +36,61 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 useHead({
   title: 'Creed Esporte',
 })
+
+const items = [
+  {
+    src: '/images/img1.jpg',
+    alt: 'Image 1',
+    descricao: 'Descrição do produto 1'
+  },
+  {
+    src: '/images/img2.jpg',
+    alt: 'Image 2',
+    descricao: 'Descrição do produto 2'
+  },
+  {
+    src: '/images/img3.jpg',
+    alt: 'Image 3',
+    descricao: 'Descrição do produto 3'
+  },
+  {
+    src: '/images/img4.jpg',
+    alt: 'Image 4',
+    descricao: 'Descrição do produto 4'
+  }
+]
+
+const produtos = [
+  {
+    src: '/images/produtos/img1.jpeg',
+    alt: 'Camisa do Corinthians',
+    descricao: 'Camisa modelo torcedor'
+  },
+  {
+    src: '/images/produtos/img5.jpeg',
+    alt: 'Camisa do Corinthians',
+    descricao: 'Camisa modelo torcedor'
+  },
+  {
+    src: '/images/produtos/img6.jpeg',
+    alt: 'Camisa do Corinthians',
+    descricao: 'Camisa modelo torcedor'
+  },
+  {
+    src: '/images/produtos/img2.jpeg',
+    alt: 'Chuteira Nike',
+  },
+  {
+    src: '/images/produtos/img3.jpeg',
+    alt: 'Chuteira Nike',
+  },
+  {
+    src: '/images/produtos/img4.jpeg',
+    alt: 'Chuteira Nike',
+  },
+];
 </script>
