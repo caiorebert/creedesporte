@@ -7,20 +7,31 @@
             class="text-white w-full justify-center"/>
         <hr style="color: gray;">
         <div class="bg-black h-full">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 bg-black">
                 <div 
                     v-for="(produto, index) in produtos" 
                     :key="index" 
                     class="bg-gray-800 rounded-lg shadow-md overflow-hidden"
                 >
                     <img 
-                        :src="produto.src" 
+                        :src="produto.url" 
                         :alt="produto.alt" 
                         class="w-full h-48 object-cover"
                     />
                     <div class="p-4">
-                        <p class="text-primary font-semibold">{{ produto.alt }}</p>
+                        <p class="text-primary font-semibold">{{ produto.nome }}</p>
                         <p class="text-white text-sm mt-2">{{ produto.descricao || 'Descrição não disponível' }}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 p-4">
+                      <div>
+                        <p class="text-primary font-semibold">R$ {{ produto.preco }}</p>
+                      </div>
+                      <div class="text-center">
+                        <UButton 
+                            :to="`/produtos/${produto.id}`"
+                            class="bg-primary text-white hover:bg-primary-dark rounded-lg p-2"
+                            >Adicionar no carrinho</UButton>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -29,9 +40,20 @@
 </template>
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+import { useAxios } from '~/composables/useAxios';
+
+const axios = useAxios();
+
+const produtos = ref<any[]>([]);
 
 useHead({
   title: 'Creed Esporte',
+})
+
+onMounted(async () => {
+  // @ts-ignore
+  const response = await axios.get('/produtos');
+  produtos.value = response.data
 })
 
 const menus = ref<NavigationMenuItem[]>([
@@ -50,38 +72,8 @@ const menus = ref<NavigationMenuItem[]>([
   {
     label: 'Contato',
     icon: 'i-lucide-phone',
-    to: '/components',
+    to: '/produtos',
     children: []
   }
 ])
-
-const produtos = [
-  {
-    src: '/images/produtos/img1.jpeg',
-    alt: 'Camisa do Corinthians',
-    descricao: 'Camisa modelo torcedor'
-  },
-  {
-    src: '/images/produtos/img5.jpeg',
-    alt: 'Camisa do Corinthians',
-    descricao: 'Camisa modelo torcedor'
-  },
-  {
-    src: '/images/produtos/img6.jpeg',
-    alt: 'Camisa do Corinthians',
-    descricao: 'Camisa modelo torcedor'
-  },
-  {
-    src: '/images/produtos/img2.jpeg',
-    alt: 'Chuteira Nike',
-  },
-  {
-    src: '/images/produtos/img3.jpeg',
-    alt: 'Chuteira Nike',
-  },
-  {
-    src: '/images/produtos/img4.jpeg',
-    alt: 'Chuteira Nike',
-  },
-];
 </script>

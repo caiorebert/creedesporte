@@ -41,6 +41,16 @@
       </UCarousel>
       <UIcon name="i-lucide-chevron-right" class="size-5" style="color: white;"/>
     </div>
+      <UModal
+        title="Modal with description"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      >
+        <UButton label="Open" color="neutral" variant="subtle" />
+
+        <template #body>
+          <Placeholder class="h-48" />
+        </template>
+      </UModal>
   </div>
 </template>
 <script setup lang="ts">
@@ -89,7 +99,7 @@ const items = [
     descricao: 'Descrição do produto 3'
   },
   {
-    src: '/images/img4.jpg',
+    src: '/images/img4.png',
     alt: 'Image 4',
     descricao: 'Descrição do produto 4'
   }
