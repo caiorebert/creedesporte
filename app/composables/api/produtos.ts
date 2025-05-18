@@ -28,3 +28,10 @@ export const salvarProduto = async (produto: any) => {
     }
     
 }
+
+export const deletarProduto = async (id: Number) => {
+    const $axios = useAxios();
+    //@ts-ignore
+    const response = await $axios.delete('/produtos/' + id);
+    return response.data;
+}
