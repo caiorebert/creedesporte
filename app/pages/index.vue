@@ -34,27 +34,24 @@
       <UIcon name="i-lucide-chevron-left" class="size-5" style="color: white;"/>
       <UCarousel v-slot="{ item }" :items="produtos" class="w-full max-w-xs mx-auto">
         <div class="bg-gray-800 rounded-lg p-4">
-          <img :src="item.src"/>
-          <h2 class="text-(--ui-primary) font-bold mt-2">{{ item.alt }}</h2>
+          <img :src="item.url"/>
+          <h2 class="text-(--ui-primary) font-bold mt-2">{{ item.nome }}</h2>
           <p v-if="item.descricao" class="text-gray-400">{{ item.descricao }}</p>
+          <hr class="mt-5 mb-5" style="color: gray;">
+          <UButton to="/produtos">Ver catálogo</UButton>
         </div>
       </UCarousel>
       <UIcon name="i-lucide-chevron-right" class="size-5" style="color: white;"/>
     </div>
-      <UModal
-        title="Modal with description"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-      >
-        <UButton label="Open" color="neutral" variant="subtle" />
-
-        <template #body>
-          <Placeholder class="h-48" />
-        </template>
-      </UModal>
   </div>
 </template>
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+import { useAxios } from '~/composables/useAxios';
+
+const axios = useAxios();
+
+const produtos = ref<any[]>([]);
 
 useHead({
   title: 'Creed Esporte',
@@ -77,7 +74,7 @@ const menus = ref<NavigationMenuItem[]>([
   {
     label: 'Contato',
     icon: 'i-lucide-phone',
-    to: '/components',
+    to: '/contato',
     children: []
   }
 ])
@@ -105,33 +102,10 @@ const items = [
   }
 ]
 
-const produtos = [
-  {
-    src: '/images/produtos/img1.jpeg',
-    alt: 'Camisa do Corinthians',
-    descricao: 'Camisa modelo torcedor'
-  },
-  {
-    src: '/images/produtos/img5.jpeg',
-    alt: 'Camisa do Corinthians',
-    descricao: 'Camisa modelo torcedor'
-  },
-  {
-    src: '/images/produtos/img6.jpeg',
-    alt: 'Camisa do Corinthians',
-    descricao: 'Camisa modelo torcedor'
-  },
-  {
-    src: '/images/produtos/img2.jpeg',
-    alt: 'Chuteira Nike',
-  },
-  {
-    src: '/images/produtos/img3.jpeg',
-    alt: 'Chuteira Nike',
-  },
-  {
-    src: '/images/produtos/img4.jpeg',
-    alt: 'Chuteira Nike',
-  },
-];
+onMounted(async () => {
+  // @ts-ignore
+  const response = await axios.get('/produtos');
+  produtos.value = response.data
+})
+
 </script>

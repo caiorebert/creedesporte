@@ -72,7 +72,7 @@ const menus = ref<NavigationMenuItem[]>([
   {
     label: 'Contato',
     icon: 'i-lucide-phone',
-    to: '/produtos',
+    to: '/contato',
     children: []
   }
 ])
