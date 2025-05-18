@@ -48,37 +48,36 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-center">
-                        <UModal
-                            title="Adicionar Produto"
-                            >
-                            <UButton
-                                size="sm"
-                                label="Adicionar Produto"
-                                color="primary"
-                                variant="solid"
-                                trailing-icon="i-lucide-plus"
-                                @click="resetaValores()"
-                            />
-                            
-                            <template #body>
-                                <div class="grid grid-rows gap-4">
-                                    <UInput size="xl" placeholder="Nome do produto" v-model="produtoModal.nome"/>
-                                    <UInput size="xl" placeholder="Preço" v-model="produtoModal.preco"/>
-                                    <UTextarea size="xl" placeholder="Descrição" v-model="produtoModal.descricao"/>
-                                    <img :src="produtoModal.url" alt="Produto" class="w-full h-48 object-cover"/>
-                                    <hr>
-                                    
-                                </div>
-                            </template>
-                        </UModal>
-                    </div>
                 </template>
-                <div class="text-right">
-                    <UButton v-if="!loading" @click="salvar" trailing-icon="i-lucide-plus">Adicionar</UButton>
-                    <UProgress v-else/>
-                </div>
             </UCollapsible>
+            <div class="flex justify-center">
+                <UModal
+                    title="Adicionar Produto"
+                    >
+                    <UButton
+                        size="sm"
+                        label="Adicionar Produto"
+                        color="primary"
+                        variant="solid"
+                        trailing-icon="i-lucide-plus"
+                        @click="resetaValores()"
+                    />
+                    
+                    <template #body>
+                        <div class="grid grid-rows gap-4">
+                            <UInput size="xl" placeholder="Nome do produto" v-model="produtoModal.nome"/>
+                            <UInput size="xl" placeholder="Preço" v-model="produtoModal.preco"/>
+                            <UTextarea size="xl" placeholder="Descrição" v-model="produtoModal.descricao"/>
+                            <img :src="produtoModal.url" alt="Produto" class="w-full h-48 object-cover"/>
+                            <hr>
+                            <div class="text-right">
+                                <UButton v-if="!loading" @click="salvar" trailing-icon="i-lucide-plus">Adicionar</UButton>
+                                <UProgress v-else/>
+                            </div>
+                        </div>
+                    </template>
+                </UModal>
+            </div>
         </div>
     </div>
 </template>
