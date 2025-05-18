@@ -68,15 +68,16 @@
                                     <UTextarea size="xl" placeholder="Descrição" v-model="produtoModal.descricao"/>
                                     <img :src="produtoModal.url" alt="Produto" class="w-full h-48 object-cover"/>
                                     <hr>
-                                    <div class="text-right">
-                                        <UButton v-if="!loading" @click="salvar" trailing-icon="i-lucide-plus">Adicionar</UButton>
-                                        <UProgress v-else/>
-                                    </div>
+                                    
                                 </div>
                             </template>
                         </UModal>
                     </div>
                 </template>
+                <div class="text-right">
+                    <UButton v-if="!loading" @click="salvar" trailing-icon="i-lucide-plus">Adicionar</UButton>
+                    <UProgress v-else/>
+                </div>
             </UCollapsible>
         </div>
     </div>
