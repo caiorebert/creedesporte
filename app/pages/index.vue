@@ -15,15 +15,21 @@
       <label class="font-bold text-(--ui-primary)">A sua crença do esporte está aqui</label>
     </div>
     <hr style="color: gray;">
-    <div class="flex items-center bg-black">
-      <UIcon name="i-lucide-chevron-left" class="size-5" style="color: white;"/>
-      <UCarousel v-slot="{ item }" :items="items" class="w-full max-w-xs mx-auto">
-        <img style="margin: 5px;" :src="item.src" width="320" height="320" class="rounded-lg">
+    <div class="h-full">
+      <UCarousel
+        arrows
+        :prev="{ color: 'primary'}"
+        :next="{ color: 'primary'}"
+        v-slot="{ item }"
+        :items="items"
+        class="w-screen ">
+        <div style="position: relative; height: 100%; overflow: hidden;">
+          <img style="position: relative; margin: auto;" :src="item.src" width="320" height="320">
+        </div>
       </UCarousel>
-      <UIcon name="i-lucide-chevron-right" class="size-5" style="color: white;"/>
     </div>
     <div class="p-3 text-1sm">
-      <label style="color: gray;">Arraste pro lado</label>
+      <label style="color: gray;">Arraste para o lado</label>
     </div>
     <hr style="color: gray;">
     <h1 class="font-bold text-2xl text-(--ui-primary) p-2 bg-black">
@@ -86,12 +92,12 @@ const items = [
     descricao: 'Descrição do produto 1'
   },
   {
-    src: '/images/img2.jpg',
+    src: '/images/img2.png',
     alt: 'Image 2',
     descricao: 'Descrição do produto 2'
   },
   {
-    src: '/images/img3.jpg',
+    src: '/images/img3.png',
     alt: 'Image 3',
     descricao: 'Descrição do produto 3'
   },

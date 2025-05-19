@@ -210,6 +210,15 @@ const deletar = async (id:Number) => {
 }
 
 onMounted(() => {
+    const config = useRuntimeConfig();
+    if (prompt('Digite a senha de admin') !== config.public.ADMIN_PASSWORD) {
+        window.location.href = '/';
+    } else {
+        toast.add({
+            title: 'Bem-vindo ao painel de admin',
+            color: 'neutral'
+        });
+    }
     listaProdutos();
 });
 
