@@ -15,14 +15,14 @@
                 <template #content>
                     <div class="produtos p-2 ">
                         <div v-for="(produto, i) in produtos">
-                            <div class="grid grid-cols-3 gap-1">
+                            <div class="grid grid-cols-3 gap-1 mt-2 mb-1">
                                 <label class="col-span-2 text-white">{{ produto.nome }}</label>
                                 <div class="grid grid-cols-2 gap-1">
                                     <div class="text-center">
                                         <UModal
                                             title="Editar Produto"
                                             size="lg"
-                                            :close="{ onClick: () => produtoModal.value = {} }"
+                                            description=""
                                             >
                                             <UButton size="lg" icon="i-lucide-pencil" @click="editar(produto.id)" color="primary" variant="solid"/>
 
@@ -32,6 +32,7 @@
                                                     <UInput size="xl" placeholder="Preço" v-model="produtoModal.preco"/>
                                                     <UTextarea size="xl" placeholder="Descrição" v-model="produtoModal.descricao"/>
                                                     <img :src="produtoModal.url" alt="Produto" class="w-full h-48 object-cover"/>
+                                                    <UInput @change="setImagem($event)" type="file" size="xl" placeholder="URL da imagem" v-model="file"/>
                                                     <hr>
                                                     <div class="text-right">
                                                         <UButton v-if="!loading" @click="salvar" trailing-icon="i-lucide-pencil">Editar</UButton>
@@ -50,12 +51,13 @@
                     </div>
                 </template>
             </UCollapsible>
-            <div class="flex justify-center">
+            <div class="flex justify-center mt-5">
                 <UModal
                     title="Adicionar Produto"
+                    description=""
                     >
                     <UButton
-                        size="sm"
+                        size="lg"
                         label="Adicionar Produto"
                         color="primary"
                         variant="solid"
@@ -69,6 +71,7 @@
                             <UInput size="xl" placeholder="Preço" v-model="produtoModal.preco"/>
                             <UTextarea size="xl" placeholder="Descrição" v-model="produtoModal.descricao"/>
                             <img :src="produtoModal.url" alt="Produto" class="w-full h-48 object-cover"/>
+                            <UInput @change="setImagem($event)" type="file" size="xl" placeholder="URL da imagem" />
                             <hr>
                             <div class="text-right">
                                 <UButton v-if="!loading" @click="salvar" trailing-icon="i-lucide-plus">Adicionar</UButton>
@@ -83,10 +86,6 @@
 </template>
 <script setup lang="ts">
 import { deletarProduto, getProdutos, getProdutosById, salvarProduto } from '~/composables/api/produtos';
-const props = defineProps<{
-  title: string,
-  severity: string,
-}>()
 
 const toast = useToast()
 
@@ -96,11 +95,16 @@ useHead({
 
 const produtos = ref(<any>[]);
 
+var file:any = null;
+
+var fileBase64 = null;
+
+
 const produtoModal = ref({
     id: null,
     nome: null,
     preco: null,
-    url: null,
+    url: '',
     descricao: null
 });
 
@@ -109,8 +113,23 @@ const resetaValores = () => {
         id: null,
         nome: null,
         preco: null,
-        url: null,
+        url: '',
         descricao: null
+    }
+}
+
+
+const setImagem = (event:Event) => {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+        var file = target.files[0];
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            if (e.target?.result) {
+                produtoModal.value.url = e.target.result.toString();
+            }
+        };
+        reader.readAsDataURL(file);
     }
 }
 
@@ -142,7 +161,8 @@ const salvar = async () => {
         id: produtoModal.value.id,
         nome: produtoModal.value.nome,
         preco: produtoModal.value.preco,
-        descricao: produtoModal.value.descricao
+        descricao: produtoModal.value.descricao,
+        url: produtoModal.value.url, 
     }
 
     loading.value = true;
