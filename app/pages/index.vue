@@ -1,117 +1,45 @@
 <template>
-  <div class="bg-black">
-    <h1 class="bg-black font-bold text-4xl text-(--ui-primary) p-2 text-center">
-      Creed Esporte 
-    </h1>
-    <div >
-      <UNavigationMenu 
-        collapsed
-        orientation="horizontal"
-        :items="menus"
-        class="text-white w-full justify-center"/>
-    </div>
-    <hr style="color: gray;">
-    <div class="h-20 p-5 flex items-center justify-center bg-black">
-      <label class="font-bold text-(--ui-primary)">A sua crença do esporte está aqui</label>
-    </div>
-    <hr style="color: gray;">
-    <div class="h-full">
-      <UCarousel
-        arrows
-        :prev="{ color: 'primary'}"
-        :next="{ color: 'primary'}"
-        v-slot="{ item }"
-        :items="items"
-        class="w-screen ">
-        <div style="position: relative; height: 100%; overflow: hidden;">
-          <img style="position: relative; margin: auto;" :src="item.src" width="320" height="320">
+  <div class="min-h-screen bg-[#000000] text-white font-sans">
+    
+    <header class="py-6 border-b border-gray-800 text-center">
+      <h1 class="text-3xl font-bold text-[#00FF7F] tracking-tighter uppercase">Creed Esporte</h1>
+      <p class="text-xs text-gray-400 mt-2 italic">A sua crença do esporte está aqui</p>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-12">
+      <h2 class="text-2xl font-semibold mb-8 border-l-4 border-[#00FF7F] pl-4">Chuteiras & Artigos</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div v-for="produto in produtos" :key="produto.id" 
+             class="group bg-[#0a0a0a] border border-gray-800 rounded-lg overflow-hidden hover:border-[#00FF7F] transition-all duration-300">
+          
+          <div class="relative aspect-square bg-[#1a1a1a] overflow-hidden">
+            <img :src="produto.imagem" :alt="produto.nome" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" />
+            <div class="absolute top-2 right-2 bg-[#00FF7F] text-black text-[10px] font-bold px-2 py-1 rounded">
+              NOVIDADE
+            </div>
+          </div>
+
+          <div class="p-5">
+            <h3 class="text-lg font-medium tracking-wide">{{ produto.nome }}</h3>
+            <p class="text-[#00FF7F] font-bold text-xl mt-2">R$ {{ produto.preco }}</p>
+            
+            <a 
+              :href="'/produto/' + produto.id">
+              <button class="w-full mt-4 bg-transparent border border-[#00FF7F] text-[#00FF7F] py-2 rounded uppercase text-sm font-bold hover:bg-[#00FF7F] hover:text-black transition-colors">
+                Ver Detalhes
+              </button>
+            </a>
+          </div>
         </div>
-      </UCarousel>
-    </div>
-    <div class="p-3 text-1sm">
-      <label style="color: gray;">Arraste para o lado</label>
-    </div>
-    <hr style="color: gray;">
-    <h1 class="font-bold text-2xl text-(--ui-primary) p-2 bg-black">
-      Nossos produtos 
-    </h1>
-    <hr style="color: gray;">
-    <div class="flex items-center bg-black p-2">
-      <UIcon name="i-lucide-chevron-left" class="size-5" style="color: white;"/>
-      <UCarousel v-slot="{ item }" :items="produtos" class="w-full max-w-xs mx-auto">
-        <div class="bg-gray-800 rounded-lg p-4">
-          <img :src="item.url"/>
-          <h2 class="text-(--ui-primary) font-bold mt-2">{{ item.nome }}</h2>
-          <p v-if="item.descricao" class="text-gray-400">{{ item.descricao }}</p>
-          <hr class="mt-5 mb-5" style="color: gray;">
-          <UButton to="/produtos">Ver catálogo</UButton>
-        </div>
-      </UCarousel>
-      <UIcon name="i-lucide-chevron-right" class="size-5" style="color: white;"/>
-    </div>
+      </div>
+    </main>
   </div>
 </template>
-<script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
-import { useAxios } from '~/composables/useAxios';
 
-const axios = useAxios();
+<script setup>
 
-const produtos = ref<any[]>([]);
+import lista from '@/data/produtos.json';
 
-useHead({
-  title: 'Creed Esporte',
-})
-
-const menus = ref<NavigationMenuItem[]>([
-  {
-    label: 'Home',
-    icon: 'i-lucide-house',
-    to: '/',
-    children: [],
-    active: true,
-  },
-  {
-    label: 'Catálogo',
-    icon: 'i-lucide-list',
-    to: '/produtos',
-    children: []
-  },
-  {
-    label: 'Contato',
-    icon: 'i-lucide-phone',
-    to: '/contato',
-    children: []
-  }
-])
-
-const items = [
-  {
-    src: '/images/img1.jpg',
-    alt: 'Image 1',
-    descricao: 'Descrição do produto 1'
-  },
-  {
-    src: '/images/img2.png',
-    alt: 'Image 2',
-    descricao: 'Descrição do produto 2'
-  },
-  {
-    src: '/images/img3.png',
-    alt: 'Image 3',
-    descricao: 'Descrição do produto 3'
-  },
-  {
-    src: '/images/img4.png',
-    alt: 'Image 4',
-    descricao: 'Descrição do produto 4'
-  }
-]
-
-onMounted(async () => {
-  // @ts-ignore
-  const response = await axios.get('/produtos');
-  produtos.value = response.data
-})
-
+const produtos = ref(lista)
 </script>
