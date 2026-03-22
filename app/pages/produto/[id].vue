@@ -75,22 +75,16 @@ import listaDeProdutos from '@/data/produtos.json'
 const route = useRoute()
 const idDoProduto = route.params.id
 
-// 1. Buscar o produto no JSON
 const produto = computed(() => {
   return listaDeProdutos.find(p => String(p.id) === String(idDoProduto))
 })
 
-// 2. Criar o estado reativo para a imagem em destaque
-// Iniciamos com null e definiremos o valor padrão dentro de um watchEffect
 const imagemSelecionada = ref(null)
 
-// 3. Lógica para definir a imagem padrão assim que o produto for carregado
 watchEffect(() => {
   if (produto.value && produto.value.galeria && produto.value.galeria.length > 0) {
-    // Define a primeira imagem da galeria como a selecionada por padrão
     imagemSelecionada.value = produto.value.galeria[0]
   } else if (produto.value && produto.value.imagem) {
-    // Fallback caso não haja galeria, usa a imagem principal
     imagemSelecionada.value = produto.value.imagem
   }
 })

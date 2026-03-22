@@ -1,4 +1,7 @@
 <template>
+  <head>
+    <title>Creed Esporte</title>
+  </head>
   <div class="min-h-screen bg-[#000000] text-white font-sans">
     
     <header class="py-6 border-b border-gray-800 text-center">
